@@ -21,14 +21,17 @@ const DashboardPage = () => {
       let slCount = 15;
       let elCount = 3;
       leaveData.forEach((leave) => {
-        if (leave.leaveType === "VL") {
-          vlCount--;
-        } else if (leave.leaveType === "SL") {
-          slCount--;
-        } else if (leave.leaveType === "EL") {
-          elCount--;
+        if (leave.status === "Approved") {
+          if (leave.leaveType === "VL") {
+            vlCount--;
+          } else if (leave.leaveType === "SL") {
+            slCount--;
+          } else if (leave.leaveType === "EL") {
+            elCount--;
+          }
         }
-      });
+      }
+      );
       setVlBalance(vlCount);
       setSlBalance(slCount);
       setElBalance(elCount);
@@ -56,7 +59,8 @@ const DashboardPage = () => {
         <h1>Dashboard</h1>
         <div className={`row`}>
           <p className={`col`}>
-            Vacation Leave - {vlBalance} Sick Leave - {slBalance} Emergency Leave - {elBalance}
+            Vacation Leave - {vlBalance} Sick Leave - {slBalance} Emergency
+            Leave - {elBalance}
           </p>
           <button className={`col`}>Add Leave</button>
         </div>
