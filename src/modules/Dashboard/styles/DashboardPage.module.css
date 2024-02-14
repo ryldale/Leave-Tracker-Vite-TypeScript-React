@@ -1,0 +1,14 @@
+table{
+    width: 100%;
+    table-layout: fixed;
+}
+
+.maxWidth{
+    max-width: 1240px;
+    width: 100%;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,29 @@
+
+.card {
+  background-color: white;
+  width: 600px;
+  height: 650px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 80px;
+}
+
+.forgotPass {
+  background-color: unset;
+  border: unset;
+  text-align: right;
+}
+
+.margin {
+  margin: 20px 0;
+}
+
+.loginBtn {
+  border-radius: 30px !important;
+  padding: 10px;
+  border: 0px;
+  font-weight: 700;
+}
+a button {
+  width: 100%;
+}

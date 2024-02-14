@@ -1,0 +1,1 @@
+export type Result = "All" | "Pending" | "Approved" | "Rejected";
