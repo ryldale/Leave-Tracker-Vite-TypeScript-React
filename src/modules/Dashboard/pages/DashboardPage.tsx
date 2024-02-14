@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import leaveData from "../../../leaveData";
 import LeaveFilter from "../components/LeaveFilter";
 import LeaveList from "../components/LeaveList";
@@ -9,6 +9,33 @@ import global from "../../../global.module.css";
 
 const DashboardPage = () => {
   const [filter, setFilter] = useState("All");
+
+  // Use a Reducer here
+  const [vlBalance, setVlBalance] = useState(15);
+  const [slBalance, setSlBalance] = useState(15);
+  const [elBalance, setElBalance] = useState(3);
+
+  useEffect(() => {
+    const updateBalances = () => {
+      let vlCount = 15;
+      let slCount = 15;
+      let elCount = 3;
+      leaveData.forEach((leave) => {
+        if (leave.leaveType === "VL") {
+          vlCount--;
+        } else if (leave.leaveType === "SL") {
+          slCount--;
+        } else if (leave.leaveType === "EL") {
+          elCount--;
+        }
+      });
+      setVlBalance(vlCount);
+      setSlBalance(slCount);
+      setElBalance(elCount);
+    };
+
+    updateBalances();
+  }, []);
 
   const handleFilterChange = (result: Result) => {
     setFilter(result);
@@ -29,7 +56,7 @@ const DashboardPage = () => {
         <h1>Dashboard</h1>
         <div className={`row`}>
           <p className={`col`}>
-            Vacation Leave - 15 Sick Leave- 15 Emergency Leave - 3
+            Vacation Leave - {vlBalance} Sick Leave - {slBalance} Emergency Leave - {elBalance}
           </p>
           <button className={`col`}>Add Leave</button>
         </div>
