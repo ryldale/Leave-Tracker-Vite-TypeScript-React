@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import leaveData from "../../../leaveData";
 import LeaveFilter from "../components/LeaveFilter";
 import LeaveList from "../components/LeaveList";
 import { Result } from "../../../types/resultType";
 import classes from "../styles/DashboardPage.module.css";
 import global from "../../../global.module.css";
+import balanceReducer from "../reducers/reducer";
+import { initialBalances } from "../reducers/reducerInit";
 // import { LeaveDataType } from "../../../types/leaveDataType";
 
 const DashboardPage = () => {
   const [filter, setFilter] = useState("All");
+  const [state, dispatch] = useReducer(balanceReducer, initialBalances);
 
-  // Use a Reducer here
-  const [vlBalance, setVlBalance] = useState(15);
-  const [slBalance, setSlBalance] = useState(15);
-  const [elBalance, setElBalance] = useState(3);
 
   useEffect(() => {
     const updateBalances = () => {
-      let vlCount = 15;
-      let slCount = 15;
-      let elCount = 3;
+      let vlCount = initialBalances.vlBalance;
+      let slCount = initialBalances.slBalance;
+      let elCount = initialBalances.elBalance;
       leaveData.forEach((leave) => {
         if (leave.status === "Approved") {
           if (leave.leaveType === "VL") {
@@ -30,11 +29,12 @@ const DashboardPage = () => {
             elCount--;
           }
         }
-      }
-      );
-      setVlBalance(vlCount);
-      setSlBalance(slCount);
-      setElBalance(elCount);
+      });
+
+      dispatch({
+        type: "UPDATE_BALANCES",
+        payload: { vlBalance: vlCount, slBalance: slCount, elBalance: elCount },
+      });
     };
 
     updateBalances();
@@ -59,8 +59,8 @@ const DashboardPage = () => {
         <h1>Dashboard</h1>
         <div className={`row`}>
           <p className={`col`}>
-            Vacation Leave - {vlBalance} Sick Leave - {slBalance} Emergency
-            Leave - {elBalance}
+            Vacation Leave - {state.vlBalance} Sick Leave - {state.slBalance} Emergency
+            Leave - {state.elBalance}
           </p>
           <button className={`col`}>Add Leave</button>
         </div>
