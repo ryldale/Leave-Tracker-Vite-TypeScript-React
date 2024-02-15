@@ -5,20 +5,19 @@ import LeaveList from "../components/LeaveList";
 import { Result } from "../../../types/resultType";
 import classes from "../styles/DashboardPage.module.css";
 import global from "../../../global.module.css";
-import balanceReducer from "../reducers/reducer";
-import { initialBalances } from "../reducers/reducerInit";
-// import { LeaveDataType } from "../../../types/leaveDataType";
+import DashboardReducer from "../reducers/reducer";
+import { initalCombinedState } from "../reducers/reducerInit";
+import LeaveModal from "../components/LeaveModal";
 
 const DashboardPage = () => {
   const [filter, setFilter] = useState("All");
-  const [state, dispatch] = useReducer(balanceReducer, initialBalances);
-
+  const [state, dispatch] = useReducer(DashboardReducer, initalCombinedState);
 
   useEffect(() => {
     const updateBalances = () => {
-      let vlCount = initialBalances.vlBalance;
-      let slCount = initialBalances.slBalance;
-      let elCount = initialBalances.elBalance;
+      let vlCount = initalCombinedState.vlBalance;
+      let slCount = initalCombinedState.slBalance;
+      let elCount = initalCombinedState.elBalance;
       leaveData.forEach((leave) => {
         if (leave.status === "Approved") {
           if (leave.leaveType === "VL") {
@@ -45,6 +44,7 @@ const DashboardPage = () => {
     // console.log(typeof(result));
   };
 
+  // Filtering the leave.status (all, pending, approved and rejected)
   const filteredLeaveData = leaveData.filter((leave) => {
     if (filter === "All") {
       return true;
@@ -53,19 +53,33 @@ const DashboardPage = () => {
     }
   });
 
+  // Modal
+  const openModal = () => {
+    dispatch({type: "OPEN_MODAL", payload: {}});
+  };
+
+  const closeModal = () => {
+    dispatch({type: "CLOSE_MODAL", payload: {}});
+  };
+
+  // console.log("Is modal open?", state.isModalOpen);
+
   return (
     <div className={`${global.container} ${classes.center} `}>
       <div className={`${classes.maxWidth} `}>
         <h1>Dashboard</h1>
         <div className={`row`}>
           <p className={`col`}>
-            Vacation Leave - {state.vlBalance} Sick Leave - {state.slBalance} Emergency
-            Leave - {state.elBalance}
+            Vacation Leave - {state.vlBalance} Sick Leave - {state.slBalance}{" "}
+            Emergency Leave - {state.elBalance}
           </p>
-          <button className={`col`}>Add Leave</button>
+          <button className={`col`} onClick={openModal}>
+            Add Leave
+          </button>
         </div>
         <LeaveFilter handleFilterChange={handleFilterChange} />
         <LeaveList filteredLeaveData={filteredLeaveData} />
+        {state.isModalOpen && <LeaveModal closeModal={closeModal} />}
       </div>
     </div>
   );
