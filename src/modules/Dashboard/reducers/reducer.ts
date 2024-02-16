@@ -12,18 +12,25 @@ export type ModalState = {
 };
 
 export type LeaveFormData = {
-  name: string
-  leaveDate: string
-  dateFiled: string
-  leaveType: string
+  name: string;
+  leaveDate: string;
+  dateFiled: string;
+  leaveType: string;
 };
+
+export type SetFilter = {
+  filter: string;
+};
+  
+export type CombinedType = BalanceState & SetFilter;
 
 export type Action = {
   type: string;
-  payload: Partial<BalanceState>;
+  filter: any;
+  payload: Partial<CombinedType>;
 };
 
-const DashboardReducer: Reducer<CombinedState ,Action> = (state, action) => {
+const DashboardReducer: Reducer<CombinedState, Action> = (state, action) => {
   switch (action.type) {
     case "UPDATE_BALANCES": {
       return {
@@ -43,6 +50,13 @@ const DashboardReducer: Reducer<CombinedState ,Action> = (state, action) => {
       return {
         ...state,
         isModalOpen: false,
+      };
+    }
+
+    case "SET_FILTER": {
+      return {
+        ...state,
+        filter: action.filter,
       };
     }
 

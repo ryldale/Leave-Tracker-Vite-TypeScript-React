@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import leaveData from "../../../leaveData";
 import LeaveFilter from "../components/LeaveFilter";
 import LeaveList from "../components/LeaveList";
@@ -14,8 +14,8 @@ type propType = {
 };
 
 const DashboardPage = ({state, dispatch}:   propType ) => {
-  const [filter, setFilter] = useState("All");
   
+  // const [filter, setFilter] = useState("All");
 
   useEffect(() => {
     const updateBalances = () => {
@@ -44,16 +44,18 @@ const DashboardPage = ({state, dispatch}:   propType ) => {
   }, []);
 
   const handleFilterChange = (result: Result) => {
-    setFilter(result);
-    // console.log(typeof(result));
+    dispatch({type: "SET_FILTER", filter: result});
+    // console.log(result);
   };
 
   // Filtering the leave.status (all, pending, approved and rejected)
   const filteredLeaveData = leaveData.filter((leave) => {
-    if (filter === "All") {
+    console.log(state.filter);
+    if (state.filter === "All") {
+  
       return true;
     } else {
-      return leave.status === filter;
+      return leave.status === state.filter;
     }
   });
 
