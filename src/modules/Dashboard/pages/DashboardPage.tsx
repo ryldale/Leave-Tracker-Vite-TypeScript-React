@@ -13,8 +13,7 @@ type propType = {
   state: CombinedState;
 };
 
-const DashboardPage = ({state, dispatch}:   propType ) => {
-  
+const DashboardPage = ({ state, dispatch}: propType) => {
   // const [filter, setFilter] = useState("All");
 
   useEffect(() => {
@@ -44,15 +43,14 @@ const DashboardPage = ({state, dispatch}:   propType ) => {
   }, []);
 
   const handleFilterChange = (result: Result) => {
-    dispatch({type: "SET_FILTER", filter: result});
+    dispatch({ type: "SET_FILTER", filter: result });
     // console.log(result);
   };
 
   // Filtering the leave.status (all, pending, approved and rejected)
   const filteredLeaveData = leaveData.filter((leave) => {
-    console.log(state.filter);
+    // console.log(state.filter);
     if (state.filter === "All") {
-  
       return true;
     } else {
       return leave.status === state.filter;
@@ -61,11 +59,11 @@ const DashboardPage = ({state, dispatch}:   propType ) => {
 
   // Modal
   const openModal = () => {
-    dispatch({type: "OPEN_MODAL", payload: {}});
+    dispatch({ type: "OPEN_MODAL", payload: {} });
   };
 
   const closeModal = () => {
-    dispatch({type: "CLOSE_MODAL", payload: {}});
+    dispatch({ type: "CLOSE_MODAL", payload: {} });
   };
 
   // console.log("Is modal open?", state.isModalOpen);
@@ -85,7 +83,9 @@ const DashboardPage = ({state, dispatch}:   propType ) => {
         </div>
         <LeaveFilter handleFilterChange={handleFilterChange} />
         <LeaveList filteredLeaveData={filteredLeaveData} />
-        {state.isModalOpen && <LeaveModal closeModal={closeModal} />}
+        {state.isModalOpen && (
+          <LeaveModal state={state} dispatch={dispatch} closeModal={closeModal} />
+        )}
       </div>
     </div>
   );

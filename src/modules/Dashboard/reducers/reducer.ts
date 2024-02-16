@@ -22,7 +22,11 @@ export type SetFilter = {
   filter: string;
 };
   
-export type CombinedType = BalanceState & SetFilter;
+export type SetForms = {
+  formData: []
+}
+
+export type CombinedType = BalanceState & SetFilter & SetForms;
 
 export type Action = {
   type: string;
@@ -59,6 +63,24 @@ const DashboardReducer: Reducer<CombinedState, Action> = (state, action) => {
         filter: action.filter,
       };
     }
+
+    // case "SET_FORMS": {
+    //   return{
+    //     ...state,
+    //     //-------------------------------------
+    //     forms: [action.filter]
+    //   }
+    // }
+
+    case "ADD_FORMS": {
+      const newForms = [...state.]
+      return{
+        ...state,
+        //-------------------------------------
+        forms: action.filter
+      }
+    }
+
 
     default: {
       return state;
