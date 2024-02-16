@@ -5,7 +5,6 @@ type propType = {
 };
 
 const LeaveModal = ({ closeModal }: propType) => {
-  
   return (
     <div className={classes.modal}>
       <div className={classes.modalContent}>

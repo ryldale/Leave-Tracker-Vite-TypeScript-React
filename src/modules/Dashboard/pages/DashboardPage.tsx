@@ -1,23 +1,27 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import leaveData from "../../../leaveData";
 import LeaveFilter from "../components/LeaveFilter";
 import LeaveList from "../components/LeaveList";
 import { Result } from "../../../types/resultType";
 import classes from "../styles/DashboardPage.module.css";
 import global from "../../../global.module.css";
-import DashboardReducer from "../reducers/reducer";
-import { initalCombinedState } from "../reducers/reducerInit";
 import LeaveModal from "../components/LeaveModal";
+import { CombinedState } from "../reducers/reducerInit";
 
-const DashboardPage = () => {
+type propType = {
+  dispatch: Function;
+  state: CombinedState;
+};
+
+const DashboardPage = ({state, dispatch}:   propType ) => {
   const [filter, setFilter] = useState("All");
-  const [state, dispatch] = useReducer(DashboardReducer, initalCombinedState);
+  
 
   useEffect(() => {
     const updateBalances = () => {
-      let vlCount = initalCombinedState.vlBalance;
-      let slCount = initalCombinedState.slBalance;
-      let elCount = initalCombinedState.elBalance;
+      let vlCount = state.vlBalance;
+      let slCount = state.slBalance;
+      let elCount = state.elBalance;
       leaveData.forEach((leave) => {
         if (leave.status === "Approved") {
           if (leave.leaveType === "VL") {

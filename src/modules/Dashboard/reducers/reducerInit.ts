@@ -1,4 +1,4 @@
-import { BalanceState, ModalState } from "./reducer";
+import { BalanceState, LeaveFormData, ModalState } from "./reducer";
 
 // SINGLE STATE
 export const initialBalances: BalanceState = {
@@ -11,7 +11,7 @@ export const initialModal: ModalState = {
   isModalOpen: false,
 };
 
-export const initialLeaveFormData = {
+export const initialLeaveFormData: LeaveFormData = {
   name: "",
   leaveDate: "",
   dateFiled: "",
@@ -19,7 +19,7 @@ export const initialLeaveFormData = {
 };
 
 // COMBINED STATES
-export type CombinedState = BalanceState & ModalState;
+export type CombinedState = BalanceState & ModalState & LeaveFormData;
 export const initalCombinedState: CombinedState = {
   ...initialBalances,
   ...initialModal,
