@@ -11,6 +11,12 @@ export type ModalState = {
   isModalOpen: boolean;
 };
 
+export type LeaveFormData = {
+  name: string
+  leaveDate: string
+  dateFiled: string
+  leaveType: string
+};
 
 export type Action = {
   type: string;

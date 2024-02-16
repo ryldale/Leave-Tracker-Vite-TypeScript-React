@@ -7,13 +7,21 @@ export const initialBalances: BalanceState = {
   elBalance: 3,
 };
 
-export const initalModal: ModalState = {
-    isModalOpen: false
-}
+export const initialModal: ModalState = {
+  isModalOpen: false,
+};
+
+export const initialLeaveFormData = {
+  name: "",
+  leaveDate: "",
+  dateFiled: "",
+  leaveType: "",
+};
 
 // COMBINED STATES
-export type CombinedState = BalanceState & ModalState; 
+export type CombinedState = BalanceState & ModalState;
 export const initalCombinedState: CombinedState = {
-    ...initialBalances,
-    ...initalModal
+  ...initialBalances,
+  ...initialModal,
+  ...initialLeaveFormData,
 };
